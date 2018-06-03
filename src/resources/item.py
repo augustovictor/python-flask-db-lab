@@ -34,3 +34,8 @@ class ItemApi(Resource):
 
     def put(self, name):
         pass
+
+
+class ItemList(Resource):
+    def get(self):
+        return { 'items': [ i.json() for i in Item.query.all() ] }

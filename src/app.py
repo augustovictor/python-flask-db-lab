@@ -5,6 +5,7 @@ from resources.user import UserRegister
 from models.user import User
 from resources.item import ItemApi
 from models.item import Item
+from resources.item import ItemList
 
 from security import authenticate, identity
 
@@ -12,6 +13,10 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 api = Api(app)
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 app.secret_key = '/x12;3117529110^%@!'
 
@@ -21,6 +26,7 @@ items = []
 
 api.add_resource(ItemApi, '/items/<string:name>')
 api.add_resource(UserRegister, '/users')
+api.add_resource(ItemList, '/item-list')
 
 if __name__ == '__main__':
     from db import db
