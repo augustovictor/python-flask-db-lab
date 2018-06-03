@@ -6,6 +6,7 @@ from models.user import User
 from resources.item import ItemApi
 from models.item import Item
 from resources.item import ItemList
+from resources.store import StoreResource
 
 from security import authenticate, identity
 
@@ -27,6 +28,7 @@ items = []
 api.add_resource(ItemApi, '/items/<string:name>')
 api.add_resource(UserRegister, '/users')
 api.add_resource(ItemList, '/item-list')
+api.add_resource(StoreResource, '/stores/<string:name>')
 
 if __name__ == '__main__':
     from db import db

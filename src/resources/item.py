@@ -7,6 +7,7 @@ class ItemApi(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('name', type=str, required=True, help='This field cannot be left blank!')
     parser.add_argument('price', type=float, required=True, help='This field cannot be left blank!')
+    parser.add_argument('store_id', type=int, required=True, help='Every item needs a store_id')
 
     # @jwt_required()
     def get(self, name):
@@ -20,7 +21,7 @@ class ItemApi(Resource):
             return { 'message': 'Item with given name already exists'}, 400
 
         data = ItemApi.parser.parse_args()
-        item = Item(None, data['name'], data['price'])
+        item = Item(None, **data)
 
         try:
             item.save_to_db()
