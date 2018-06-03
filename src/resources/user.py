@@ -13,10 +13,13 @@ class UserRegister(Resource):
         if User.find_by_username(data['username']):
             return { 'message': 'Username already taken!'}, 400
 
-        # user = User(1, data['username'], data['password'])
-        # createdUser = User.signup(data['username'], data['password'])
-        # return createdUser, 201 if createdUser else None, 400
+        user = User(**data)
+        
+        user.save_to_db()
+        return user.json(), 201
+        # try:
+        #     user.save_to_db()
+        #     return user.json(), 201
+        # except:
+        #     return { 'message': 'Something went wrong' }, 500
 
-        User.signup(data['username'], data['password'])
-
-        return { 'message': 'User created successfully!' }, 201
